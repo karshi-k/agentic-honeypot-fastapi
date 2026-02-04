@@ -1,7 +1,9 @@
 import os
 import time
 import asyncio
+from datetime import datetime
 from typing import Dict, Optional, List
+from typing_extensions import TypedDict
 
 import httpx
 from fastapi import FastAPI, Header, HTTPException, Request
@@ -10,6 +12,8 @@ from pydantic import BaseModel, Field
 
 from hf_client import HFChatClient
 from agent_graph import build_graph
+from dotenv import load_dotenv
+load_dotenv()
 
 API_KEY = os.getenv("HP_API_KEY", "CHANGE_ME")
 GUVI_CALLBACK_URL = "https://hackathon.guvi.in/api/updateHoneyPotFinalResult"
@@ -18,18 +22,18 @@ GUVI_TIMEOUT_SECONDS = float(os.getenv("GUVI_TIMEOUT_SECONDS", "5"))
 class Message(BaseModel):
     sender: str
     text: str
-    timestamp: str
+    timestamp: datetime
 
 class Metadata(BaseModel):
-    channel: Optional[str] = None
-    language: Optional[str] = None
-    locale: Optional[str] = None
+    channel: str = "SMS"
+    language: str = "English"
+    locale: str = "IN"
 
 class IncomingEvent(BaseModel):
     sessionId: str
     message: Message
-    conversationHistory: List[Message] = Field(default_factory=list)
-    metadata: Optional[Metadata] = None
+    conversationHistory: Optional[List[Message]] = Field(default_factory=list)
+    metadata: Metadata
 
 # In-memory session storage. If you run multiple workers, use Redis for shared state.
 SESSIONS: Dict[str, dict] = {}
