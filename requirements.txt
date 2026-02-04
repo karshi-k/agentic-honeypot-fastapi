@@ -4,3 +4,4 @@ pydantic
 httpx
 langgraph
 langchain-core
+python-dotenv
