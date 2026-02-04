@@ -22,18 +22,18 @@ GUVI_TIMEOUT_SECONDS = float(os.getenv("GUVI_TIMEOUT_SECONDS", "5"))
 class Message(BaseModel):
     sender: str
     text: str
-    timestamp: datetime
+    timestamp: int  
 
 class Metadata(BaseModel):
-    channel: str = "SMS"
-    language: str = "English"
-    locale: str = "IN"
+    channel: Optional[str] = "SMS"
+    language: Optional[str] = "English"
+    locale: Optional[str] = "IN"
 
 class IncomingEvent(BaseModel):
     sessionId: str
     message: Message
-    conversationHistory: Optional[List[Message]] = Field(default_factory=list)
-    metadata: Metadata
+    conversationHistory: List[Message] = Field(default_factory=list)
+    metadata: Optional[Metadata] = None
 
 # In-memory session storage. If you run multiple workers, use Redis for shared state.
 SESSIONS: Dict[str, dict] = {}
