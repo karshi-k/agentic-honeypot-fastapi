@@ -88,7 +88,7 @@ def node_extract(state: AgentState) -> AgentState:
         state["phishingLinks"].add(m.strip().rstrip(").,;"))
 
     for m in RE_UPI.findall(text):
-        state["upiIds"].add(m.strip())
+        state["upiIds"].add(m)
 
     for m in RE_PHONE.findall(text):
         state["phoneNumbers"].add(m.strip())
