@@ -7,7 +7,7 @@ from langgraph.graph import StateGraph, END
 # --- regex extractors ---
 RE_URL = re.compile(r"(https?://[^\s]+)", re.IGNORECASE)
 RE_SHORT = re.compile(r"\b(?:bit\.ly|tinyurl\.com|t\.co|goo\.gl|cutt\.ly|rb\.gy)/[A-Za-z0-9_-]+\b", re.IGNORECASE)
-RE_UPI = re.compile(r"\b[a-zA-Z0-9.\-_]{2,}@[a-zA-Z]{2,}\b")
+RE_UPI = re.compile( r"(?<![\w.-])([a-zA-Z0-9._-]{2,})@([a-zA-Z0-9]{2,})(?![\w.-])")
 RE_PHONE = re.compile(r"\b(?:\+91[-\s]?)?[6-9]\d{9}\b")
 RE_BANK_AC = re.compile(r"\b\d{9,18}\b")
 
@@ -17,7 +17,7 @@ SUSPICIOUS_KEYWORDS = [
     "upi", "bank account", "share details", "immediately"
 ]
 
-FINALIZE_MIN_ARTIFACTS = int(os.getenv("FINALIZE_MIN_ARTIFACTS", "1"))
+FINALIZE_MIN_ARTIFACTS = int(os.getenv("FINALIZE_MIN_ARTIFACTS", "3"))
 
 class AgentState(TypedDict, total=False):
     sessionId: str
