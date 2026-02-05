@@ -1,7 +1,7 @@
 import re
 import os
 from typing import TypedDict, List, Dict, Set
-from hf_client import HFClient
+from hf_client import HFChatClient
 
 from langgraph.graph import StateGraph, END
 
@@ -39,6 +39,8 @@ class AgentState(TypedDict, total=False):
     reply: str
     shouldFinalize: bool
     agentNotes: str
+
+hf_client = HFChatClient()
 
 def _score_scam(text: str) -> float:
     t = text.lower()
