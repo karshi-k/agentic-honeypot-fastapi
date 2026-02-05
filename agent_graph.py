@@ -1,7 +1,7 @@
 import re
 import os
 from typing import TypedDict, List, Dict, Set
-from hf_client import hf_chat
+from hf_client import HFClient
 
 from langgraph.graph import StateGraph, END
 
