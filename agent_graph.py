@@ -152,7 +152,7 @@ async def node_reply_llm(state: AgentState, hf_chat) -> AgentState:
         first_line = reply.strip().split("\n")[0].strip()
         state["reply"] = (first_line[:500]) if first_line else "Okay—what do I need to do first? Can you resend the link?"
     except Exception:
-        state["reply"] = "I’m confused—can you resend the link and tell me the exact steps? My app isn’t opening properly."
+        state["reply"] = (first_line[:500]) #"I’m confused—can you resend the link and tell me the exact steps? My app isn’t opening properly."
 
     return state
 
